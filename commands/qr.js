@@ -31,9 +31,7 @@ function sendimage(message) {
 }
 
 module.exports = {
-  category: 'Fun',
-  minargs: 1,
-  maxargs: 2,
+  category: 'Tools',
   init: () => {
     setTimeout(() => {  console.log('[IToncek] => QRcode modul nacten') }, 50);
   },

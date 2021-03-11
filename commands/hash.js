@@ -1,49 +1,27 @@
-var qr = require('qr-image');
-const DiscordJS = require('discord.js')
+function hash32(str, asString, seed) {
+  /*jshint bitwise:false */
+  var i, l,
+      hval = (seed === undefined) ? 0x811c9dc5 : seed;
 
-function coord2offset(x, y, size) {
-  return (size + 1) * y + x + 1;
-}
-
-function customize(bitmap) {
-  const size = bitmap.size;
-  const data = bitmap.data;
-
-  for (let x = 0; x < size; x++) {
-      for (let y = 0; y < x; y++) {
-          const offset = coord2offset(x, y, size);
-          // If it's white change it's color
-          if (data[offset]) {
-              data[offset] = 255 - Math.abs(x - y);
-          }
-      }
+  for (i = 0, l = str.length; i < l; i++) {
+      hval ^= str.charCodeAt(i);
+      hval += (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
   }
-}
-
-function sendimage(message) {
-  const attachment = new DiscordJS.MessageAttachment('custom.png', 'qrcode.png');
-
-  const embed = new DiscordJS.MessageEmbed()
-    .setTitle('Tady je tvůj QRkód')
-    .attachFiles(attachment)
-    .setImage('attachment://qrcode.png');
-    message.channel.send({embed});
+  if( asString ){
+      // Convert to 8 digit hex string
+      return ("0000000" + (hval >>> 0).toString(16)).substr(-8);
+  }
+  return hval >>> 0;
 }
 
 module.exports = {
-  category: 'Fun',
+  category: 'Tools',
   minargs: 1,
   maxargs: 2,
   init: () => {
-    setTimeout(() => {  console.log('[IToncek] => QRcode modul nacten') }, 50);
+    setTimeout(() => {  console.log('[IToncek] => Hash modul nacten') }, 100);
   },
   callback: ({ message, args }) => {
-    console.log("[IToncek] => Někdo použil příkaz \"/qr " + args.join(" ") + "\"")
-    qr.image(args.join(" "), {
-      type: 'png',
-    }).pipe(require('fs').createWriteStream('custom.png'))
-    message.channel.startTyping();
-    setTimeout(() => {  sendimage(message); }, 2000);
-    message.channel.stopTyping();
+    message.channel.send(hash32(args.join(" "), true))
   }
 }
