@@ -1,3 +1,5 @@
+const DiscordJS = require('discord.js')
+
 function hash32(str, asString, seed) {
   /*jshint bitwise:false */
   var i, l,
@@ -14,14 +16,21 @@ function hash32(str, asString, seed) {
   return hval >>> 0;
 }
 
+function embdedcreated(message, msg) {
+  const attachment = new DiscordJS.MessageAttachment('custom.png', 'qrcode.png');
+
+  const embed = new DiscordJS.MessageEmbed()
+    .setDescription(msg)
+    .setColor('#00ff00')
+    message.channel.send({embed});
+}
+
 module.exports = {
   category: 'Tools',
-  minargs: 1,
-  maxargs: 2,
   init: () => {
     setTimeout(() => {  console.log('[IToncek] => Hash modul nacten') }, 100);
   },
   callback: ({ message, args }) => {
-    message.channel.send(hash32(args.join(" "), true))
+    embdedcreated(message, hash32(args.join(" "), true))
   }
 }
