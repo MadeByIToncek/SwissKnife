@@ -10,6 +10,7 @@ function embdedcreated(message, msg) {
     const attachment = new DiscordJS.MessageAttachment('custom.png', 'qrcode.png');
   
     const embed = new DiscordJS.MessageEmbed()
+      .setTitle("Binární výstup:")
       .setDescription(msg)
       .setColor('#00ff00')
       message.channel.send({embed});

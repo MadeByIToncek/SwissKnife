@@ -24,6 +24,7 @@ function sendimage(message) {
   const attachment = new DiscordJS.MessageAttachment('custom.png', 'qrcode.png');
 
   const embed = new DiscordJS.MessageEmbed()
+    .setTitle("QR kód:")
     .attachFiles(attachment)
     .setImage('attachment://qrcode.png')
     .setColor('#00ff00');

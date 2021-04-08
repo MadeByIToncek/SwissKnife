@@ -12,6 +12,7 @@ function toHex(str) {
     const attachment = new DiscordJS.MessageAttachment('custom.png', 'qrcode.png');
   
     const embed = new DiscordJS.MessageEmbed()
+      .setTitle("Hexadecimální výstup:")
       .setDescription(msg)
       .setColor('#00ff00')
       message.channel.send({embed});

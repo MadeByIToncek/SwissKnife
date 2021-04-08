@@ -93,6 +93,7 @@ function embdedcreated(message, msg) {
   
     const embed = new DiscordJS.MessageEmbed()
       .setDescription(msg)
+      .setTitle("Morseovka:")
       .setColor('#00ff00')
       message.channel.send({embed});
   }
