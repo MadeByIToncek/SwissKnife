@@ -85,7 +85,7 @@ function convert(args) {
     var z = y.replace('z', '⨅')
     console.log(z)
     console.log('------------------------------------')   
-    return z
+    return z + '///'
 }
 
 function embdedcreated(message, msg) {
@@ -93,7 +93,7 @@ function embdedcreated(message, msg) {
   
     const embed = new DiscordJS.MessageEmbed()
       .setTitle("Minecraft Enchant Table Language (METL):")
-      .setDescription(msg)
+      .setDescription("Pokud text nekončí s \"///\" tak není překlad kompletní z důvodů limitu discordu. \n" + msg.slice(0,1961))
       .setColor('#00ff00')
       message.channel.send({embed});
   }
